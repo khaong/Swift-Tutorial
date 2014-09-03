@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6206.8" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="5ke-Z4-Imp">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7026.1"/>
+        <capability name="Constraints with attributes relative to the layout margin" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Search Results View Controller-->
@@ -76,29 +77,97 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hel-WJ-0Op">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hel-WJ-0Op">
                                 <rect key="frame" x="16" y="89" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="GG3-yM-pyZ"/>
+                                    <constraint firstAttribute="height" constant="100" id="UXr-rm-JuV"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="GG3-yM-pyZ"/>
+                                        <exclude reference="UXr-rm-JuV"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="GG3-yM-pyZ"/>
+                                        <include reference="UXr-rm-JuV"/>
+                                    </mask>
+                                </variation>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Title Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7SW-it-u9F">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Really long name of an album might go here" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="260" translatesAutoresizingMaskIntoConstraints="NO" id="7SW-it-u9F">
                                 <rect key="frame" x="149" y="118" width="435" height="42"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="133" y="118" width="251" height="42"/>
-                                </variation>
                             </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="C0n-jq-458">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="Nwf-37-TC2" id="8KB-nf-7UY"/>
+                                    <outlet property="delegate" destination="Nwf-37-TC2" id="uaa-mP-Vy0"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="7SW-it-u9F" secondAttribute="trailing" constant="20" id="3Gw-b6-H7m"/>
+                            <constraint firstItem="C0n-jq-458" firstAttribute="top" secondItem="hel-WJ-0Op" secondAttribute="bottom" constant="8" symbolic="YES" id="EcI-aR-0NA"/>
+                            <constraint firstItem="C0n-jq-458" firstAttribute="top" secondItem="7SW-it-u9F" secondAttribute="bottom" constant="8" symbolic="YES" id="Fa1-KF-G9j"/>
+                            <constraint firstItem="C0n-jq-458" firstAttribute="leading" secondItem="hel-WJ-0Op" secondAttribute="leading" id="aFD-Ex-RCc"/>
+                            <constraint firstItem="7SW-it-u9F" firstAttribute="leading" secondItem="hel-WJ-0Op" secondAttribute="trailing" constant="8" symbolic="YES" id="aq5-hp-7gD"/>
+                            <constraint firstItem="hel-WJ-0Op" firstAttribute="top" secondItem="Jax-o9-v1A" secondAttribute="bottom" constant="14" id="d7h-LI-COl"/>
+                            <constraint firstItem="gK4-fb-m9P" firstAttribute="top" secondItem="C0n-jq-458" secondAttribute="bottom" constant="8" symbolic="YES" id="gwC-xT-iho"/>
+                            <constraint firstItem="C0n-jq-458" firstAttribute="leading" secondItem="gW6-m7-mzX" secondAttribute="leadingMargin" id="ieZ-CJ-pbY"/>
+                            <constraint firstItem="7SW-it-u9F" firstAttribute="top" secondItem="hel-WJ-0Op" secondAttribute="top" id="ozH-Dc-eUs"/>
+                            <constraint firstItem="7SW-it-u9F" firstAttribute="trailing" secondItem="C0n-jq-458" secondAttribute="trailing" id="vbe-Fe-Z7p"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="C0n-jq-458"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="d7h-LI-COl"/>
+                                <exclude reference="3Gw-b6-H7m"/>
+                                <exclude reference="aq5-hp-7gD"/>
+                                <exclude reference="ozH-Dc-eUs"/>
+                                <exclude reference="vbe-Fe-Z7p"/>
+                                <exclude reference="EcI-aR-0NA"/>
+                                <exclude reference="Fa1-KF-G9j"/>
+                                <exclude reference="aFD-Ex-RCc"/>
+                                <exclude reference="ieZ-CJ-pbY"/>
+                                <exclude reference="gwC-xT-iho"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="C0n-jq-458"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="d7h-LI-COl"/>
+                                <include reference="3Gw-b6-H7m"/>
+                                <include reference="aq5-hp-7gD"/>
+                                <include reference="ozH-Dc-eUs"/>
+                                <include reference="vbe-Fe-Z7p"/>
+                                <include reference="EcI-aR-0NA"/>
+                                <include reference="Fa1-KF-G9j"/>
+                                <include reference="aFD-Ex-RCc"/>
+                                <include reference="ieZ-CJ-pbY"/>
+                                <include reference="gwC-xT-iho"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="albumCover" destination="hel-WJ-0Op" id="Ans-OY-3NK"/>
                         <outlet property="titleLabel" destination="7SW-it-u9F" id="rHz-V7-TMF"/>
+                        <outlet property="tracksTableView" destination="C0n-jq-458" id="XTu-Nx-866"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jyv-3h-51E" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1417.5" y="798"/>
+            <point key="canvasLocation" x="1479" y="798"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="3tg-ke-aa0">
