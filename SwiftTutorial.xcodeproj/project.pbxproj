@@ -84,14 +84,14 @@
 			isa = PBXGroup;
 			children = (
 				020BE46E19A7265F006C3E0B /* Blank52.png */,
+				0262C60519A729E6003CF464 /* Album.swift */,
 				020BE46C19A721FF006C3E0B /* APIController.swift */,
 				020BE44F19A71EB3006C3E0B /* AppDelegate.swift */,
+				0262C60719A72A94003CF464 /* DetailsViewController.swift */,
 				020BE45119A71EB3006C3E0B /* SearchResultsViewController.swift */,
 				020BE45319A71EB3006C3E0B /* Main.storyboard */,
 				020BE45619A71EB3006C3E0B /* Images.xcassets */,
 				020BE44D19A71EB3006C3E0B /* Supporting Files */,
-				0262C60519A729E6003CF464 /* Album.swift */,
-				0262C60719A72A94003CF464 /* DetailsViewController.swift */,
 			);
 			path = SwiftTutorial;
 			sourceTree = "<group>";
