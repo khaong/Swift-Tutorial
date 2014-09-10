@@ -7,14 +7,21 @@
 //
 
 import UIKit
+import MediaPlayer
 
-class DetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class DetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, APIControllerProtocol {
     
     var album: Album?
+    var tracks = [Track]()
+    var selectedRow = -1
+    let kCellIdentifier: String = "TrackCell"
+    var mediaPlayer: MPMoviePlayerController = MPMoviePlayerController()
     
     @IBOutlet weak var tracksTableView: UITableView!
     @IBOutlet weak var albumCover: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
+    
+    lazy var api : APIController = APIController(delegate: self)
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -24,13 +31,51 @@ class DetailsViewController: UIViewController, UITableViewDataSource, UITableVie
         super.viewDidLoad()
         titleLabel.text = self.album?.title
         albumCover.image = UIImage(data: NSData(contentsOfURL: NSURL(string: self.album!.largeImageURL)))
+        if self.album != nil {
+            api.lookupAlbum(self.album!.collectionId)
+        }
     }
-    
+
+    /// MARK: UITableViewDataSource, UITableViewDelegate methods
     func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return tracks.count
     }
     
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
-        return nil
+        let cell = tableView.dequeueReusableCellWithIdentifier(kCellIdentifier) as TrackCell
+        let track = self.tracks[indexPath.row]
+        cell.titleLabel.text = track.title
+        cell.playIcon.text = "▶️"
+        
+        return cell
+    }
+    
+    func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
+        if selectedRow == indexPath.row {
+            mediaPlayer.stop()
+            if let cell = tableView.cellForRowAtIndexPath(indexPath) as? TrackCell {
+                cell.playIcon.text = "▶️"
+            }
+            return
+        }
+        
+        selectedRow = indexPath.row
+        var track = tracks[selectedRow]
+        mediaPlayer.stop()
+        mediaPlayer.contentURL = NSURL(string: track.previewUrl)
+        mediaPlayer.play()
+        if let cell = tableView.cellForRowAtIndexPath(indexPath) as? TrackCell {
+            cell.playIcon.text = "🔇"
+        }
+    }
+    
+    // MARK: APIControllerProtocol
+    func didReceiveAPIResults(results: NSDictionary) {
+        var resultsArr: NSArray = results["results"] as NSArray
+        dispatch_async(dispatch_get_main_queue(), {
+            self.tracks = Track.tracksWithJSON(resultsArr)
+            self.tracksTableView.reloadData()
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        })
     }
 }

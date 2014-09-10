@@ -57,4 +57,7 @@ class APIController {
         }
     }
     
+    func lookupAlbum(collectionId: Int) {
+        get("https://itunes.apple.com/lookup?id=\(collectionId)&entity=song")
+    }
 }
